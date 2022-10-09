@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="Pacman.UserControls.UscInicio"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pacman.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             mc:Ignorable="d" 
+             Height="800" Width="800">
+    <Grid Background="Black">
+        <StackPanel>
+            <Image Source="/Pacman;component/Imagens/banner.png"></Image>
+            <!-- the transitioner will manage your transitions. notice how SelectedIndex is set to zero: the first slide (instead of the default of -1) -->
+            <Viewbox Height="50" Margin="0,50,0 ,25">
+                <Button
+                    x:Name="btnJogar"
+                    Height="100" Width="500"
+    Style="{StaticResource MaterialDesignOutlinedButton}"
+    ToolTip="MaterialDesignOutlinedButton" FontSize="50" Click="btnJogar_Click">
+                    JOGAR
+                </Button>
+            </Viewbox>
+            <Viewbox Height="50" Margin="0,5">
+                <Button
+                    x:Name="btnConfigurarMapa"
+                    Height="100" Width="500"
+    Style="{StaticResource MaterialDesignOutlinedButton}"
+    ToolTip="MaterialDesignOutlinedButton" FontSize="50" Click="btnConfigurarMapa_Click">
+                    Configurar Mapa
+                </Button>
+            </Viewbox>
+        </StackPanel>
+    </Grid>
+</UserControl>
