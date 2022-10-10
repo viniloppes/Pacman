@@ -5,23 +5,30 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pacman.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="850" Width="800" KeyUp="UserControl_KeyUp"
+             Height="1080" Width="800" KeyUp="UserControl_KeyUp"
              Focusable="True" PreviewKeyUp="OnKeyUp">
     <Grid>
 
-        <local:UscTileMap Margin="0, 50, 0, 0" x:Name="uscTileMap"></local:UscTileMap>
-        <Border Background="{DynamicResource PrimaryHueDarkBrush}" Height="50" VerticalAlignment="Top">
-            <StackPanel Orientation="Horizontal" >
-                <materialDesign:Chip
+        <StackPanel>
+
+            <Border Background="{DynamicResource PrimaryHueDarkBrush}" Height="50" VerticalAlignment="Top">
+                <StackPanel Orientation="Horizontal" >
+                    <materialDesign:Chip
                     x:Name="txtTempo"
                     Content="ANZ Bank">
-                    <materialDesign:Chip.Icon>
-                        <materialDesign:PackIcon Kind="AvTimer"></materialDesign:PackIcon>
-                    </materialDesign:Chip.Icon>
-                </materialDesign:Chip>
-                
-            </StackPanel>
-        </Border>
+                        <materialDesign:Chip.Icon>
+                            <materialDesign:PackIcon Kind="AvTimer"></materialDesign:PackIcon>
+                        </materialDesign:Chip.Icon>
+                    </materialDesign:Chip>
+
+                </StackPanel>
+            </Border>
+            <Viewbox Height="800" Width="800">
+
+                <local:UscTileMap x:Name="uscTileMap"></local:UscTileMap>
+            </Viewbox>
+        </StackPanel>
+
 
 
     </Grid>

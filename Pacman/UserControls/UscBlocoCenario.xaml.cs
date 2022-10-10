@@ -9,6 +9,7 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -25,10 +26,47 @@ namespace Pacman.UserControls
             InitializeComponent();
         }
 
+        private string _nomeArquivo;
+
+        public string NomeArquivo
+        {
+            get
+            {
+                imgBloco.Source = new BitmapImage(
+                    new Uri("/Pacman;component/Imagens/blocos/" + _nomeArquivo,
+                    UriKind.Relative));
+
+                return _nomeArquivo;
+            }
+            set
+            {
+                _nomeArquivo = value;
+                imgBloco.Source = new BitmapImage(
+                 new Uri("/Pacman;component/Imagens/blocos/" + _nomeArquivo,
+                 UriKind.Relative));
+            }
+        }
+
+        private int _linha;
+
+        public int Linha
+        {
+            get { return _linha; }
+            set { _linha = value; }
+        }
+        private int _coluna;
+
+        public int Coluna
+        {
+            get { return _coluna; }
+            set { _coluna = value; }
+        }
         public enum ENUM_TIPO_BLOCO
         {
             VAZIO,
-            PAREDE
+            PAREDE,
+            PASTILHA,
+            SUPER_PASTILHA
         }
         private double _posLeft;
 
@@ -57,21 +95,27 @@ namespace Pacman.UserControls
                 {
                     case ENUM_TIPO_BLOCO.VAZIO:
                         imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/vazio.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
 
                         break;
                     case ENUM_TIPO_BLOCO.PAREDE:
-                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/block.png", UriKind.Relative));
-
+                        imgBloco.Source =
+                            new BitmapImage(
+                            new Uri("/Pacman;component/Imagens/blocos/" + _nomeArquivo,
+                            UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
 
                         break;
-                    //case "2":
-                    //    grdConteudo.Background = (Brush)new BrushConverter().ConvertFrom("#FFFFFF00");
+                    case ENUM_TIPO_BLOCO.PASTILHA:
+                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/pastilha.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
 
-                    //    break;
-                    //case 3:
-                    //    break;
-                    //case 4:
-                    //    break;
+                        break;
+                    case ENUM_TIPO_BLOCO.SUPER_PASTILHA:
+                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/super-pastilha.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Visible;
+
+                        break;
                 }
                 return _tipoBloco;
             }
@@ -83,12 +127,26 @@ namespace Pacman.UserControls
                 {
                     case ENUM_TIPO_BLOCO.VAZIO:
                         imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/vazio.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
 
                         break;
                     case ENUM_TIPO_BLOCO.PAREDE:
-                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/block.png", UriKind.Relative));
+                        imgBloco.Source =
+                            new BitmapImage(
+                            new Uri("/Pacman;component/Imagens/blocos/block.png",
+                            UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
 
 
+                        break;
+                    case ENUM_TIPO_BLOCO.PASTILHA:
+                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/pastilha.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Hidden;
+
+                        break;
+                    case ENUM_TIPO_BLOCO.SUPER_PASTILHA:
+                        imgBloco.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/blocos/super-pastilha.png", UriKind.Relative));
+                        grdSuperPastilhaAnimada.Visibility = Visibility.Visible;
                         break;
 
 

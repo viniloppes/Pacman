@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Script.Serialization;
+using static Pacman.UserControls.UscBlocoCenario;
 
 namespace Pacman.CLASSES
 {
@@ -13,60 +14,36 @@ namespace Pacman.CLASSES
         public static ConfigGame CarregaConfigGame(string arquivoConfig)
         {
             ConfigGame configGame = new ConfigGame();
+            List<BlocoCenario> listaBc = new List<BlocoCenario>();
             try
             {
                 JavaScriptSerializer serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
                 dynamic resultado = serializer.DeserializeObject(File.ReadAllText(arquivoConfig));
 
-                //Produto p = new Produto();
-                //p.NomeArquivo = Path.GetFileName(strProduto);
-                //p.Id = resultado["Id"];
-                //p.Nome = resultado["Nome"];
-                //p.Descricao = resultado["Descricao"];
-                //p.Preco = (float)resultado["Preco"];
-                //p.Caminho_img = resultado["Caminho_img"];
-                //p.Molas = new List<Mola>();
-                //var teste = resultado["Molas"];
-                //foreach (dynamic o in teste)
-                //{
-                //    try
-                //    {
-                //        Mola m = new Mola();
-                //        m.Id = o["Id"];
-                //        m.Qtd = o["Qtd"];
-                //        try
-                //        {
-                //            m.QtdMax = o["QtdMax"];
-                //        }
-                //        catch (Exception ex)
-                //        {
-                //            m.QtdMax = m.Qtd;
-                //        }
-                //        try
-                //        {
-                //            dynamic statusObjeto = o["Status"];
-                //            m.Status = new StatusMola();
-                //            m.Status.Id = statusObjeto["Id"];
-                //            m.Status.Valor = statusObjeto["Valor"];
-                //        }
-                //        catch (Exception ex)
-                //        {
 
-                //        }
+                configGame.MapColunas = resultado["MapColunas"];
+                configGame.MapLinhas = resultado["MapLinhas"];
+                configGame.TileSize = resultado["TileSize"];
+                var map = resultado["Map"];
+                configGame.Map = new BlocoCenario[configGame.MapLinhas, configGame.MapColunas];
+                
+                foreach (dynamic o in map)
+                {
+                    BlocoCenario bc = new BlocoCenario();
+                    bc.Coluna = o["Coluna"];
+                    bc.Linha = o["Linha"];
+                    bc.NomeArquivo = o["NomeArquivo"];
+                    bc.PosLeft = o["PosLeft"];
+                    bc.PosTop = o["PosTop"];
+                    bc.TipoBloco = (ENUM_TIPO_BLOCO)o["TipoBloco"];
+                    listaBc.Add(bc);
+                }
 
-                //        p.Molas.Add(m);
-                //    }
-                //    catch
-                //    {
-                //    }
-                //}
-
-                //p.Mola = resultado["mola"];
-                //
-
-                //listaProd.Add(p);
-
-
+                foreach (BlocoCenario blocoAux in listaBc)
+                {
+                    configGame.Map[blocoAux.Linha, blocoAux.Coluna] = blocoAux;
+                }
+                
             }
             catch (Exception ex)
             {

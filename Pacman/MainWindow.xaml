@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Pacman" xmlns:usercontrols="clr-namespace:Pacman.UserControls"
         mc:Ignorable="d"
-        Title="Pacman" Height="800" Width="800" Loaded="Window_Loaded" KeyUp="Window_KeyUp">
+        Title="Pacman" Height="1080" Width="1920" Loaded="Window_Loaded" KeyUp="Window_KeyUp" WindowState="Maximized">
     <Grid>
         <Grid Background="Black">
             <Viewbox HorizontalAlignment="Center">
-                <Grid Height="850" Width="800">
+                <Grid Height="1080" Width="1920">
 
                     <usercontrols:UscInicio x:Name="uscInicio">
                         

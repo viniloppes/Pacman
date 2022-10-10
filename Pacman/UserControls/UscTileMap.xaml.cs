@@ -27,6 +27,8 @@ namespace Pacman.UserControls
             grdCenario.Children.Clear();
         }
 
+
+
         private UscBlocoCenario[,] _map;
         public UscPacman Pacman { get; set; }
 
@@ -147,7 +149,31 @@ namespace Pacman.UserControls
                 throw ex;
             }
         }
+        public void RemoveBloco(UscBlocoCenario ubc)
+        {
 
+            try
+            {
+                //Map[ubc.Linha, ubc.Coluna] = null;
+                UscBlocoCenario ubcRepositor = new UscBlocoCenario();
+                ubcRepositor.PosLeft = ubc.Width * ubc.Coluna;
+                ubcRepositor.PosTop = ubc.Height * ubc.Linha;
+                ubcRepositor.Linha = ubc.Linha;
+                ubcRepositor.Coluna = ubc.Coluna;
+                ubcRepositor.HorizontalAlignment = HorizontalAlignment.Left;
+                ubcRepositor.VerticalAlignment = VerticalAlignment.Top;
+                ubcRepositor.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PASTILHA;
+                imprimeBloco(ubcRepositor);
+                grdCenario.Children.Remove(ubc);
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+        }
 
         public void imprimeBloco(UscBlocoCenario ubc)
         {
@@ -155,6 +181,7 @@ namespace Pacman.UserControls
             ubc.Margin = new Thickness(ubc.PosLeft, ubc.PosTop, 0, 0);
             ubc.HorizontalAlignment = HorizontalAlignment.Left;
             ubc.VerticalAlignment = VerticalAlignment.Top;
+            
             ubc.Height = this.TileSize;
             ubc.Width = this.TileSize;
             grdCenario.Children.Add(ubc);

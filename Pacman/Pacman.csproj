@@ -161,6 +161,26 @@
     <Resource Include="Imagens\blocos\block.png" />
     <Resource Include="Imagens\blocos\vazio.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\blocos\capBottom.png" />
+    <Resource Include="Imagens\blocos\capLeft.png" />
+    <Resource Include="Imagens\blocos\capRight.png" />
+    <Resource Include="Imagens\blocos\capTop.png" />
+    <Resource Include="Imagens\blocos\pastilha.png" />
+    <Resource Include="Imagens\blocos\pipeConnectorBottom.png" />
+    <Resource Include="Imagens\blocos\pipeConnectorDownwards.png" />
+    <Resource Include="Imagens\blocos\pipeConnectorLeft.png" />
+    <Resource Include="Imagens\blocos\pipeConnectorRight.png" />
+    <Resource Include="Imagens\blocos\pipeConnectorTop.png" />
+    <Resource Include="Imagens\blocos\pipeCorner1.png" />
+    <Resource Include="Imagens\blocos\pipeCorner2.png" />
+    <Resource Include="Imagens\blocos\pipeCorner3.png" />
+    <Resource Include="Imagens\blocos\pipeCorner4.png" />
+    <Resource Include="Imagens\blocos\pipeCross.png" />
+    <Resource Include="Imagens\blocos\pipeHorizontal.png" />
+    <Resource Include="Imagens\blocos\pipeVertical.png" />
+    <Resource Include="Imagens\blocos\super-pastilha.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

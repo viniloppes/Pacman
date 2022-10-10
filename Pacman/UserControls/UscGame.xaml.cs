@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pacman.CLASSES;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,7 +41,7 @@ namespace Pacman.UserControls
                 try
                 {
                     dispatcherTimer.Tick += DispatcherTimer_Tick;
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 100);
                     dispatcherTimer.Start();
                 }
                 catch (Exception ex)
@@ -50,53 +51,36 @@ namespace Pacman.UserControls
                 try
                 {
                     dispatcherTimerSegundos.Tick += DispatcherTimerSegundos_Tick; ;
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 1);
-                    dispatcherTimer.Start();
+                    dispatcherTimerSegundos.Interval = new TimeSpan(0, 0, 0, 1);
+                    dispatcherTimerSegundos.Start();
                 }
                 catch (Exception ex)
                 {
 
                 }
-                uscTileMap.MapColunas = 16;
-                uscTileMap.MapLinhas = 16;
+                ConfigGame cg = DadosGerais.configGame;
+                uscTileMap.MapColunas = cg.MapColunas;
+                uscTileMap.MapLinhas = cg.MapLinhas;
                 uscTileMap.Map = new UscBlocoCenario[uscTileMap.MapColunas, uscTileMap.MapLinhas];
-                uscTileMap.TileSize = 50;
+                uscTileMap.TileSize = cg.TileSize;
                 for (int i = 0; i < uscTileMap.MapLinhas; i++)
                 {
 
                     for (int j = 0; j < uscTileMap.MapColunas; j++)
                     {
+                        BlocoCenario cgBlocoAtual = cg.Map[i, j];
                         UscBlocoCenario ubc = new UscBlocoCenario();
-                        ubc.PosLeft = ubc.Width * j;
-                        ubc.PosTop = ubc.Height * i;
-                        if (j == 0 || i == 0)
-                        {
-                            ubc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
-                            uscTileMap.imprimeBloco(ubc);
-                            uscTileMap.Map[i, j] = ubc;
-                        }
-                        else if (j == (uscTileMap.MapColunas - 1))
-                        {
-                            ubc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
+                        ubc.PosLeft = cgBlocoAtual.PosLeft;
+                        ubc.PosTop = cgBlocoAtual.PosTop;
+                        ubc.Linha = i;
+                        ubc.Coluna = j;
+                        ubc.HorizontalAlignment = HorizontalAlignment.Left;
+                        ubc.VerticalAlignment = VerticalAlignment.Top;
+                        ubc.TipoBloco = cgBlocoAtual.TipoBloco;
+                        ubc.NomeArquivo = cgBlocoAtual.NomeArquivo == null ? "pastilha.png" : cgBlocoAtual.NomeArquivo;
+                        uscTileMap.imprimeBloco(ubc);
+                        uscTileMap.Map[i, j] = ubc;
 
-                            uscTileMap.imprimeBloco(ubc);
-                            uscTileMap.Map[i, j] = ubc;
-                        }
-                        else if (i == (uscTileMap.MapLinhas - 1))
-                        {
-                            ubc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
-
-                            uscTileMap.imprimeBloco(ubc);
-                            uscTileMap.Map[i, j] = ubc;
-                        }
-                        else
-                        {
-                            ubc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.VAZIO;
-
-                            uscTileMap.imprimeBloco(ubc);
-                            uscTileMap.Map[i, j] = ubc;
-
-                        }
 
                     }
                 }
@@ -140,16 +124,16 @@ namespace Pacman.UserControls
             {
                 try
                 {
-                    if(toutDuracaGame > 0)
+                    if (toutDuracaGame > 0)
                     {
                         //toutTempoJogado += 1;
                         //string intPase = (toutTempoJogado / 20).ToString();
                         //if( Int32.TryParse(intPase, out int i))
                         //{
-                        //    txtTempo.Content = i + " sec";
+                        //txtTempo.Content = toutTempoJogado++;
                         //}
                         GameLoop();
-                        if(--toutDuracaGame == 0)
+                        if (--toutDuracaGame == 0)
                         {
                             toutDuracaGame = TOUT_DURACAO_GAME;
                         }
@@ -234,24 +218,46 @@ namespace Pacman.UserControls
                 {
                     case Key.Down:
                         uscTileMap.Pacman.requestedMovingDirection = UscPacman.ENUM_DIRECAO.DOWN;
+                        if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
+                        {
+                            uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
+
+                        }
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
+
                         break;
                     case Key.Up:
                         uscTileMap.Pacman.requestedMovingDirection = UscPacman.ENUM_DIRECAO.UP;
+                        if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
+                        {
+                            uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
+
+                        }
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
                     case Key.Left:
                         uscTileMap.Pacman.requestedMovingDirection = UscPacman.ENUM_DIRECAO.LEFT;
+                        if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
+                        {
+                            uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
+
+                        }
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
                     case Key.Right:
                         uscTileMap.Pacman.requestedMovingDirection = UscPacman.ENUM_DIRECAO.RIGHT;
+                        if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
+                        {
+                            uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
+
+                        }
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
                 }
+
 
             }
             catch (Exception ex)

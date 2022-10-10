@@ -3,10 +3,355 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Pacman.UserControls"
+             xmlns:local="clr-namespace:Pacman.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             Height="1080" Width="1920">
     <Grid>
-            
+        <StackPanel>
+            <Grid x:Name="grdMontaGame" 
+                  HorizontalAlignment="Left" 
+                  Height="1000" Width="1920"
+                  VerticalAlignment="Top" 
+                        >
+
+
+                <Grid x:Name="grdPacman" Height="800" Margin="0" HorizontalAlignment="Left" VerticalAlignment="Top"
+                      >
+                    <local:UscTileMap x:Name="uscTileMap"></local:UscTileMap>
+                    <local:UscBlocoCenario
+                    x:Name="uscBlocoCenarioSombra"
+                    VerticalAlignment="Top" 
+                    Height="50" Width="50"
+                    HorizontalAlignment="Left" 
+                    Margin="750,50,0,0"></local:UscBlocoCenario>
+                </Grid>
+                <StackPanel Width="400" Margin="910,-10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <materialDesign:Card
+    materialDesign:ShadowAssist.ShadowDepth="Depth2"
+    Padding="32" Background="#19808080">
+                        <Viewbox Margin="50">
+                            <local:UscBlocoCenario
+                                x:Name="uscBlocoCenarioAtual"
+                                Height="50" 
+                                Width="50"
+                                
+                                TipoBloco="PAREDE" MouseDown="uscBlocoCenarioAtual_MouseDown" 
+                                ></local:UscBlocoCenario>
+                        </Viewbox>
+                    </materialDesign:Card>
+
+
+                    <Viewbox x:Name="Lixeira" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" HorizontalAlignment="Left">
+                        <Button
+                       Height="50" Width="50"
+                            Style="{StaticResource MaterialDesignOutlinedButton}"
+                            ToolTip="Arraste aqui para excluir" FontSize="17">
+                            <materialDesign:PackIcon
+                                x:Name="lixeiraIcon"
+                                Kind="TrashCan" 
+                                FontSize="30" Height="41" Width="40" Margin="-13,0,-12,0" />
+
+                        </Button>
+                    </Viewbox>
+                </StackPanel>
+
+                <ScrollViewer Width="600"
+                              x:Name="scvConteudo"
+                          PanningMode="VerticalOnly" 
+                          ManipulationBoundaryFeedback="scvConteudo_ManipulationBoundaryFeedback" Margin="1310,0,10,0" 
+                          >
+                    <StackPanel>
+                        <Grid Margin="5,5">
+
+                            <Border Height="90"  Background="{DynamicResource PrimaryHueDarkBrush}" CornerRadius="10" VerticalAlignment="Top">
+
+                            </Border>
+
+                            <Expander
+                                Expanded="Expander_Expanded"
+                    HorizontalAlignment="Stretch" Foreground="White" Background="#00FAFAFA" >
+
+                                <Expander.Header >
+                                    <Border Height="65" VerticalAlignment="Center">
+                                        <TextBlock Foreground="White" 
+                                                   Text="BLOCOS" 
+                                           Width="{Binding ElementName=expOneDay, Path=ActualWidth}"
+                                           HorizontalAlignment="Stretch" 
+                                           FontSize="25" 
+                                           FontWeight="Medium" 
+                                           VerticalAlignment="Center" 
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,25,0" />
+                                    </Border>
+                                </Expander.Header>
+
+
+
+                                <WrapPanel HorizontalAlignment="Center">
+
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario 
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="block.png"
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                ></local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="capBottom.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="capLeft.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="capRight.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="capTop.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorBottom.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorDownwards.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorLeft.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorRight.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorTop.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+
+
+
+
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeCorner1.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeCorner2.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeCorner3.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeCorner4.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeCross.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeHorizontal.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorDownwards.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeVertical.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorDownwards.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorDownwards.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                    <!---->
+                                    <Grid Height="175" Width="175" Margin="50">
+                                        <Viewbox>
+                                            <local:UscBlocoCenario
+                                                TipoBloco="PAREDE" 
+                                                NomeArquivo="pipeConnectorDownwards.png" 
+                                                MouseUp="imgBlocoCenario_MouseUp"
+                                                >
+                                            </local:UscBlocoCenario>
+                                        </Viewbox>
+                                    </Grid>
+                                </WrapPanel>
+                            </Expander>
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Grid Margin="128,805,1586,0">
+                    <Button
+                        x:Name="btnSalvar"
+                        Style="{StaticResource MaterialDesignFlatMidBgButton}"
+                        Height="50" Click="btnSalvar_Click"
+                        >
+                        <TextBlock
+      Text="Salvar" FontSize="25" VerticalAlignment="Center" />
+                    </Button>
+                </Grid>
+                <Grid Margin="432,805,1282,0">
+                    <Button
+    Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Height="50"
+    >
+                        <TextBlock
+      Text="Voltar" FontSize="25" VerticalAlignment="Center" />
+                    </Button>
+                </Grid>
+                <!--<local:UscBlocoCenario HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1147,158,0,0"></local:UscBlocoCenario>-->
+            </Grid>
+
+        </StackPanel>
     </Grid>
 </UserControl>

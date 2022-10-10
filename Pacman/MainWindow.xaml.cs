@@ -31,7 +31,7 @@ namespace Pacman
         public int[,] map;
 
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        
+
         public ENUM_TELAS telaAtual = ENUM_TELAS.USC_NENHUM;
         public enum ENUM_TELAS
         {
@@ -57,13 +57,62 @@ namespace Pacman
                 }
 
                 uscInicio.OnJogar += UscInicio_OnJogar;
-    
-
+                uscInicio.OnConfigurarMapa += UscInicio_OnConfigurarMapa;
+                uscConfigTileMap.OnEnviaSalvarConfig += UscConfigTileMap_OnEnviaSalvarConfig;
+                DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
                 OcultaTodasTelas();
                 ExibeTela(ENUM_TELAS.USC_INICIO);
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+        }
+
+        private void UscConfigTileMap_OnEnviaSalvarConfig(UscTileMap utp)
+        {
+            try
+            {
+                ConfigGame cg = new ConfigGame();
+                cg.Map = new BlocoCenario[utp.MapLinhas, utp.MapColunas];
+                for (int i = 0; i < utp.MapLinhas; i++)
+                {
+                    for (int j = 0; j < utp.MapColunas; j++)
+                    {
+                        UscBlocoCenario ubcAtual = utp.Map[i, j];
+                        cg.Map[i, j] = new BlocoCenario();
+                        cg.Map[i, j].TipoBloco = ubcAtual.TipoBloco;
+                        cg.Map[i, j].NomeArquivo = ubcAtual.NomeArquivo;
+                        cg.Map[i, j].PosLeft = ubcAtual.PosLeft;
+                        cg.Map[i, j].PosTop = ubcAtual.PosTop;
+                        cg.Map[i, j].Linha = ubcAtual.Linha;
+                        cg.Map[i, j].Coluna = ubcAtual.Coluna;
+
+                    }
+                }
+                //cg.Map = utp.Map;
+                cg.MapColunas = utp.MapColunas;
+                cg.MapLinhas = utp.MapLinhas;
+                cg.TileSize = utp.TileSize;
+                Negocios.SalvaConfigGame(DadosGerais.caminhoArquivoConfigGame, cg);
+                ExibeTela(ENUM_TELAS.USC_INICIO);
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void UscInicio_OnConfigurarMapa()
+        {
+            try
+            {
+                ExibeTela(ENUM_TELAS.USC_CONFIG_TILE_MAP);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }
@@ -90,10 +139,11 @@ namespace Pacman
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
         }
-       
+
 
         private void OcultaTela(ENUM_TELAS tela)
         {
@@ -118,7 +168,8 @@ namespace Pacman
             catch (Exception ex)
             {
 
-                
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
         private void ExibeTela(ENUM_TELAS tela, object obj = null)
@@ -154,7 +205,8 @@ namespace Pacman
             catch (Exception ex)
             {
 
-                
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+
             }
         }
 
@@ -187,8 +239,8 @@ namespace Pacman
             }
             catch (Exception ex)
             {
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
-                throw;
             }
         }
     }

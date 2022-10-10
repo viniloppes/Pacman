@@ -6,12 +6,10 @@
              xmlns:local="clr-namespace:Pacman.UserControls"
              mc:Ignorable="d" 
              Height="800" Width="800">
-    <Grid>
-        <Viewbox>
-            <Grid  Height="800" Width="800">
-                <Grid x:Name="grdCenario" VerticalAlignment="Top" HorizontalAlignment="Left">
-                </Grid>
-            </Grid>
-        </Viewbox>
+
+    <Grid  Height="800" Width="800">
+        <Grid x:Name="grdCenario" VerticalAlignment="Top" HorizontalAlignment="Left">
+        </Grid>
     </Grid>
+
 </UserControl>

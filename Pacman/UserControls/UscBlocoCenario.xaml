@@ -4,11 +4,38 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pacman.UserControls"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              Height="50" Width="50">
+    <UserControl.Resources>
+        <Storyboard x:Key="StbSuperPastilha" RepeatBehavior="Forever">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="superPastilha2">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource StbSuperPastilha}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
+
     <Grid x:Name="grdConteudo">
 
         <Image x:Name="imgBloco" 
+             
                Source="/Pacman;component/Imagens/blocos/block.png"></Image>
+
+
+        <Grid x:Name="grdSuperPastilhaAnimada">
+            <Image x:Name="superPastilha1" Source="/Pacman;component/Imagens/blocos/pastilha.png">
+
+            </Image>
+            <Image x:Name="superPastilha2" Source="/Pacman;component/Imagens/blocos/super-pastilha.png">
+
+            </Image>
+        </Grid>
+
     </Grid>
 </UserControl>

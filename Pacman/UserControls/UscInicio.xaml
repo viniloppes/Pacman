@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pacman.UserControls" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             Height="800" Width="800">
+             Height="1080" Width="1920">
     <Grid Background="Black">
-        <StackPanel>
+        <StackPanel Height="1080" Width="1000">
             <Image Source="/Pacman;component/Imagens/banner.png"></Image>
             <!-- the transitioner will manage your transitions. notice how SelectedIndex is set to zero: the first slide (instead of the default of -1) -->
             <Viewbox Height="50" Margin="0,50,0 ,25">
