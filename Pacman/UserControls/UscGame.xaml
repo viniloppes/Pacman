@@ -11,15 +11,20 @@
 
         <StackPanel>
 
-            <Border Background="{DynamicResource PrimaryHueDarkBrush}" Height="50" VerticalAlignment="Top">
+            <Border 
+                Background="{DynamicResource PrimaryHueDarkBrush}"
+                Height="100" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal" >
-                    <materialDesign:Chip
+                    <Viewbox>
+                        <materialDesign:Chip
                     x:Name="txtTempo"
                     Content="ANZ Bank">
-                        <materialDesign:Chip.Icon>
-                            <materialDesign:PackIcon Kind="AvTimer"></materialDesign:PackIcon>
-                        </materialDesign:Chip.Icon>
-                    </materialDesign:Chip>
+                            <materialDesign:Chip.Icon>
+                                <materialDesign:PackIcon Kind="AvTimer"></materialDesign:PackIcon>
+                            </materialDesign:Chip.Icon>
+                        </materialDesign:Chip>
+                    </Viewbox>
+
 
                 </StackPanel>
             </Border>

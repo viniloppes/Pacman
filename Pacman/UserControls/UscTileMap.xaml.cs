@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Pacman.UserControls.UscBlocoCenario;
 using static Pacman.UserControls.UscPacman;
 
 namespace Pacman.UserControls
@@ -66,10 +67,32 @@ namespace Pacman.UserControls
         {
             try
             {
-                //if (direcao == null)
-                //{
-                //    return false;
-                //}
+
+                var m = RenornaColisaoUscBlocoCenario(x, y, direcao);
+                if (m != null)
+                {
+
+                    if (m.TipoBloco == UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE)
+                    {
+                        return true;
+                    }
+                }
+
+                return false;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public UscBlocoCenario RenornaColisaoUscBlocoCenario(double x, double y, ENUM_DIRECAO direcao)
+        {
+            try
+            {
+                UscBlocoCenario ubc = null;
                 string verificaX = (x / this.TileSize).ToString();
                 string verificaY = (y / this.TileSize).ToString();
                 int intAux;
@@ -105,21 +128,53 @@ namespace Pacman.UserControls
                             break;
 
                     }
-                    var m = this.Map[linha, coluna];
-                    if (m.TipoBloco == UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE)
-                    {
-                        return true;
-                    }
+                    ubc = this.Map[linha, coluna];
                 }
-
-                return false;
-
+                return ubc;
             }
             catch (Exception ex)
             {
 
-                throw ex;
+                throw;
             }
+        }
+
+        public bool aplicaColisaoPastilha(double x, double y, ENUM_DIRECAO direcao)
+        {
+            try
+            {
+                //if (m != null)
+                //{
+                for (int i = 0; i < this.MapLinhas; i++)
+                {
+                    for (int j = 0; j < this.MapColunas; j++)
+                    {
+                        var m = Map[i, j];
+                        if (m.TipoBloco == ENUM_TIPO_BLOCO.PASTILHA ||
+                  m.TipoBloco == ENUM_TIPO_BLOCO.SUPER_PASTILHA)
+                        {
+
+                            if (x < m.PosLeft + (m.Width / 3) &&
+                               x + (m.Width / 3) > m.PosLeft &&
+                               y < m.PosTop + ( m.Height / 3) &&
+                               y + (m.Height / 3) > m.PosTop
+                                )
+                            {
+                                //return ubcColisao;
+                                ((UscBlocoCenario)grdCenario.Children[grdCenario.Children.IndexOf(m)]).TipoBloco = ENUM_TIPO_BLOCO.VAZIO;
+
+                                return true;
+                            }
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+            }
+            return false;
         }
 
         public bool VerificaCaminhoLivre(double x, double y, ENUM_DIRECAO direcao)
@@ -137,7 +192,7 @@ namespace Pacman.UserControls
                         return true;
                     }
 
-                  
+
                 }
 
                 return false;
@@ -181,7 +236,7 @@ namespace Pacman.UserControls
             ubc.Margin = new Thickness(ubc.PosLeft, ubc.PosTop, 0, 0);
             ubc.HorizontalAlignment = HorizontalAlignment.Left;
             ubc.VerticalAlignment = VerticalAlignment.Top;
-            
+
             ubc.Height = this.TileSize;
             ubc.Width = this.TileSize;
             grdCenario.Children.Add(ubc);

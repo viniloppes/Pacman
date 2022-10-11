@@ -67,6 +67,7 @@
     <Compile Include="CLASSES\ConfigGame.cs" />
     <Compile Include="CLASSES\DadosGerais.cs" />
     <Compile Include="CLASSES\Negocios.cs" />
+    <Compile Include="CLASSES\Posicao.cs" />
     <Compile Include="UserControls\UscBlocoCenario.xaml.cs">
       <DependentUpon>UscBlocoCenario.xaml</DependentUpon>
     </Compile>

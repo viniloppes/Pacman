@@ -38,6 +38,20 @@ namespace Pacman.UserControls
         public bool ColisaoParede { get;  set; }
         public ENUM_DIRECAO direcaoAtual { get; set; }
         public ENUM_DIRECAO requestedMovingDirection { get; set; }
+        private int _linha;
+
+        public int Linha
+        {
+            get { return _linha; }
+            set { _linha = value; }
+        }
+        private int _coluna;
+
+        public int Coluna
+        {
+            get { return _coluna; }
+            set { _coluna = value; }
+        }
         private double _posLeft;
 
         public double PosLeft

@@ -15,7 +15,7 @@
                     x:Name="btnJogar"
                     Height="100" Width="500"
     Style="{StaticResource MaterialDesignOutlinedButton}"
-    ToolTip="MaterialDesignOutlinedButton" FontSize="50" Click="btnJogar_Click">
+                    FontSize="50" Click="btnJogar_Click">
                     JOGAR
                 </Button>
             </Viewbox>
@@ -24,7 +24,8 @@
                     x:Name="btnConfigurarMapa"
                     Height="100" Width="500"
     Style="{StaticResource MaterialDesignOutlinedButton}"
-    ToolTip="MaterialDesignOutlinedButton" FontSize="50" Click="btnConfigurarMapa_Click">
+                    
+                    FontSize="50" Click="btnConfigurarMapa_Click">
                     Configurar Mapa
                 </Button>
             </Viewbox>

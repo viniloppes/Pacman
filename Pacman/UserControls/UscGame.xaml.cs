@@ -32,6 +32,7 @@ namespace Pacman.UserControls
 
         int toutDuracaGame = 0;
         int toutTempoJogado = 0;
+        int pontos = 0;
         const int TOUT_DURACAO_GAME = 1200;//1min // 1 Segundo == 20
         public void Inicializa(object obj)
         {
@@ -92,6 +93,8 @@ namespace Pacman.UserControls
                 uscTileMap.InserePacman(up);
                 toutDuracaGame = TOUT_DURACAO_GAME;
                 toutTempoJogado = 0;
+                int pontos = 0;
+
             }
             catch (Exception ex)
             {
@@ -111,6 +114,7 @@ namespace Pacman.UserControls
             try
             {
                 toutTempoJogado++;
+                txtTempo.Content = toutTempoJogado + " sec";
             }
             catch (Exception ex)
             {
@@ -126,12 +130,7 @@ namespace Pacman.UserControls
                 {
                     if (toutDuracaGame > 0)
                     {
-                        //toutTempoJogado += 1;
-                        //string intPase = (toutTempoJogado / 20).ToString();
-                        //if( Int32.TryParse(intPase, out int i))
-                        //{
-                        //txtTempo.Content = toutTempoJogado++;
-                        //}
+                        
                         GameLoop();
                         if (--toutDuracaGame == 0)
                         {
@@ -158,7 +157,6 @@ namespace Pacman.UserControls
                 if (uscTileMap.VerificaColisaoParede(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.direcaoAtual) == true)
                 {
                     uscTileMap.Pacman.ColisaoParede = true;
-                    //uscTileMap.Pacman.FezPrimeiroMovimento = false;
                 }
                 else
                 {
@@ -171,6 +169,22 @@ namespace Pacman.UserControls
 
             }
         }
+
+        public void VerificaColisaoPastilha()
+        {
+            try
+            {
+                if (uscTileMap.aplicaColisaoPastilha(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.direcaoAtual) == true)
+                {
+                    pontos += 10;
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+
+        }
         public void GameLoop()
         {
             try
@@ -179,15 +193,7 @@ namespace Pacman.UserControls
                 uscTileMap.Pacman.AtualizaPosicao();
                 VerificaColisaoBloco();
                 MovePacman();
-                //if (DadosGerais.toutMovePacman > 0)
-                //{
-                //    if (--DadosGerais.toutMovePacman == 0)
-                //    {
-
-                //    }
-                //}
-                //uscTileMap.Pacman.AtualizaPosicao()
-
+                VerificaColisaoPastilha();
             }
             catch (Exception ex)
             {
@@ -201,7 +207,6 @@ namespace Pacman.UserControls
 
                 if (uscTileMap.VerificaCaminhoLivre(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.requestedMovingDirection) == true)
                 {
-                    //uscTileMap.Pacman.Pause = false;
                     uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
 
                 }
