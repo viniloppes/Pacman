@@ -93,8 +93,8 @@ namespace Pacman.UserControls
                 uscTileMap.InserePacman(up);
                 toutDuracaGame = TOUT_DURACAO_GAME;
                 toutTempoJogado = 0;
-                int pontos = 0;
-
+                pontos = 0;
+                txtPonto.Content = pontos + " pontos";
             }
             catch (Exception ex)
             {
@@ -177,6 +177,7 @@ namespace Pacman.UserControls
                 if (uscTileMap.aplicaColisaoPastilha(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.direcaoAtual) == true)
                 {
                     pontos += 10;
+                    txtPonto.Content = pontos + " pontos";
                 }
             }
             catch (Exception ex)
