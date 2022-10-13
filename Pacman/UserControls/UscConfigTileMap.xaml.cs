@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Pacman.UserControls.UscBlocoCenario;
 
 namespace Pacman.UserControls
 {
@@ -32,6 +33,8 @@ namespace Pacman.UserControls
         {
             try
             {
+                uscTileMap.listaBlocoCenarioAux = new List<UscBlocoCenario>();
+
                 uscBlocoCenarioSombra.Opacity = 0;
                 expdAtual = new Expander();
                 ConfigGame cg = DadosGerais.configGame;
@@ -54,12 +57,15 @@ namespace Pacman.UserControls
                         ubc.VerticalAlignment = VerticalAlignment.Top;
                         ubc.TipoBloco = cgBlocoAtual.TipoBloco;
                         ubc.NomeArquivo = cgBlocoAtual.NomeArquivo == null? "pastilha.png" : cgBlocoAtual.NomeArquivo;
-                        uscTileMap.imprimeBloco(ubc);
+                        uscTileMap.InsereBlocos(ubc);
                         uscTileMap.Map[i, j] = ubc;
 
 
                     }
                 }
+
+                expBloco.IsExpanded = true;
+                scvConteudo.ScrollToHome();
             }
             catch (Exception ex)
             {
@@ -118,7 +124,7 @@ namespace Pacman.UserControls
             {
                 UscBlocoCenario ubcEnviadoAux = ((UscBlocoCenario)sender);
                 UscBlocoCenario ubc = new UscBlocoCenario();
-                ubc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
+                ubc.TipoBloco = ubcEnviadoAux.TipoBloco;
                 ubc.NomeArquivo = ubcEnviadoAux.NomeArquivo;
                 ubc.Height = ubcEnviadoAux.Height;
                 ubc.Width = ubcEnviadoAux.Width;
@@ -141,6 +147,8 @@ namespace Pacman.UserControls
         {
             try
             {
+                uscBlocoCenarioSombra.Opacity = 0;
+
                 Point pEpsCursor = e.GetPosition(grdMontaGame);
                 UscBlocoCenario auxSender = ((UscBlocoCenario)sender);
                 UscBlocoCenario ubcColisao = PosicaoColisaoBloco(pEpsCursor);
@@ -150,12 +158,13 @@ namespace Pacman.UserControls
                     UscBlocoCenario novoUbc = new UscBlocoCenario();
                     novoUbc.PosLeft = ubcColisao.PosLeft;
                     novoUbc.PosTop = ubcColisao.PosTop;
-                    novoUbc.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
+                    novoUbc.TipoBloco = auxSender.TipoBloco;
                     novoUbc.NomeArquivo = auxSender.NomeArquivo;
                     novoUbc.Linha = ubcColisao.Linha;
+                    novoUbc.MouseDown += NovoUbc_MouseDown;
                     novoUbc.Coluna = ubcColisao.Coluna;
                     uscTileMap.Map[novoUbc.Linha, novoUbc.Coluna] = novoUbc;
-                    uscTileMap.imprimeBloco(novoUbc);
+                    uscTileMap.InsereBlocos(novoUbc);
 
                 }
                 else
@@ -173,6 +182,18 @@ namespace Pacman.UserControls
             }
         }
 
+        private void NovoUbc_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
 
         private void uscBlocoCenarioAtual_MouseMove(object sender, MouseEventArgs e)
         {
@@ -193,7 +214,10 @@ namespace Pacman.UserControls
                     {
                         aux.Opacity = 0.1;
                         uscBlocoCenarioSombra.Opacity = 1;
-                        uscBlocoCenarioSombra.TipoBloco = UscBlocoCenario.ENUM_TIPO_BLOCO.PAREDE;
+                        uscBlocoCenarioSombra.BorderBrush = Brushes.White;
+                        uscBlocoCenarioSombra.BorderThickness = new Thickness(2);
+
+                        uscBlocoCenarioSombra.TipoBloco = aux.TipoBloco;
                         uscBlocoCenarioSombra.NomeArquivo = aux.NomeArquivo;
                         uscBlocoCenarioSombra.HorizontalAlignment = HorizontalAlignment.Left;
                         uscBlocoCenarioSombra.VerticalAlignment = VerticalAlignment.Top;
@@ -257,5 +281,36 @@ namespace Pacman.UserControls
 
             }
         }
+        public delegate void EnviaEventoClick();
+        public event EnviaEventoClick OnVoltar;
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OnVoltar?.Invoke();
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        private void btnExcluir_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                UscBlocoCenario ubcExcluir = new UscBlocoCenario();
+                ubcExcluir.TipoBloco = ENUM_TIPO_BLOCO.PASTILHA;
+                ubcExcluir.NomeArquivo = "pastilha.png";
+                ubcExcluir.Height = 50;
+                ubcExcluir.Width = 50;
+                uscBlocoCenarioAtual_MouseDown(ubcExcluir, e);
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+      
     }
 }

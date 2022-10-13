@@ -74,8 +74,14 @@
     <Compile Include="UserControls\UscConfigTileMap.xaml.cs">
       <DependentUpon>UscConfigTileMap.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UscEnemy.xaml.cs">
+      <DependentUpon>UscEnemy.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UscGame.xaml.cs">
       <DependentUpon>UscGame.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControls\UscGameOver.xaml.cs">
+      <DependentUpon>UscGameOver.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UscInicio.xaml.cs">
       <DependentUpon>UscInicio.xaml</DependentUpon>
@@ -106,7 +112,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControls\UscEnemy.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UserControls\UscGame.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UscGameOver.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -181,6 +195,17 @@
     <Resource Include="Imagens\blocos\pipeHorizontal.png" />
     <Resource Include="Imagens\blocos\pipeVertical.png" />
     <Resource Include="Imagens\blocos\super-pastilha.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\ghost.png" />
+    <Resource Include="Imagens\scaredGhost.png" />
+    <Resource Include="Imagens\scaredGhost2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\ghosts\down.png" />
+    <Resource Include="Imagens\ghosts\left.png" />
+    <Resource Include="Imagens\ghosts\right.png" />
+    <Resource Include="Imagens\ghosts\up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />

@@ -49,6 +49,7 @@ namespace Pacman.CLASSES
     public class BlocoCenario
     {
 
+
         private string _nomeArquivo;
 
         public string NomeArquivo

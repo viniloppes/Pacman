@@ -12,34 +12,69 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static Pacman.UserControls.UscPacman;
 
 namespace Pacman.UserControls
 {
     /// <summary>
-    /// Interação lógica para UscPacman.xam
+    /// Interação lógica para UscEnemy.xam
     /// </summary>
-    public partial class UscPacman : UserControl
+    public partial class UscEnemy : UserControl
     {
-        public UscPacman()
+        public UscEnemy()
         {
             InitializeComponent();
         }
+        public int Id { get; set; }
+        private ENUM_ESTADO_GHOST _estadoGhostAtual;
 
-        public enum ENUM_DIRECAO
+        public ENUM_ESTADO_GHOST EstadoGhostAtual
         {
-            UP,
-            LEFT,
-            RIGHT,
-            DOWN
-        }
-        //public bool Pause { get; set; }
-        public bool FezPrimeiroMovimento { get;  set; }
-        public double velocidade { get; set; }
-        public bool ColisaoParede { get;  set; }
-        public ENUM_DIRECAO direcaoAtual { get; set; }
-        public ENUM_DIRECAO requestedMovingDirection { get; set; }
-        private int _linha;
+            get
+            {
+                switch (_estadoGhostAtual)
+                {
+                    case ENUM_ESTADO_GHOST.NORMAL:
+                        //imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghost.png", UriKind.Relative));
 
+                        break;
+                    case ENUM_ESTADO_GHOST.ASSUSTADO:
+                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/scaredGhost.png", UriKind.Relative));
+
+                        break;
+                }
+                return _estadoGhostAtual;
+            }
+            set
+            {
+                _estadoGhostAtual = value;
+                switch (_estadoGhostAtual)
+                {
+                    case ENUM_ESTADO_GHOST.NORMAL:
+                        //imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghost.png", UriKind.Relative));
+
+                        break;
+                    case ENUM_ESTADO_GHOST.ASSUSTADO:
+                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/scaredGhost.png", UriKind.Relative));
+
+                        break;
+                }
+            }
+        }
+
+
+        public enum ENUM_ESTADO_GHOST
+        {
+            NORMAL,
+            ASSUSTADO
+        }
+        public bool ColisaoParede { get; set; }
+        public ENUM_DIRECAO direcaoAtual { get; set; }
+        //public ENUM_DIRECAO requestedMovingDirection { get; set; }
+        private int _linha;
+        public double velocidade { get; set; }
+
+        public bool mudandoDirecao { get; set; }
         public int Linha
         {
             get { return _linha; }
@@ -83,9 +118,10 @@ namespace Pacman.UserControls
 
         public bool Pause()
         {
-            return !this.FezPrimeiroMovimento  || this.ColisaoParede;
+            return  this.ColisaoParede || this.mudandoDirecao;
         }
-      
+
+     
 
         public void AtualizaPosicao()
         {
@@ -93,46 +129,40 @@ namespace Pacman.UserControls
             {
                 if (Pause() == false)
                 {
-                    RotateTransform rotate;
                     switch (this.direcaoAtual)
                     {
                         case ENUM_DIRECAO.LEFT:
+                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/left.png", UriKind.Relative));
+
                             this.PosLeft -= this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
-                            rotate =
-    new RotateTransform(180);
-                            grdImagens.RenderTransform = rotate;
                             break;
                         case ENUM_DIRECAO.UP:
+                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/up.png", UriKind.Relative));
+
                             this.PosTop -= this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
-
-                            rotate =
-  new RotateTransform(-90);
-                            grdImagens.RenderTransform = rotate;
                             break;
                         case ENUM_DIRECAO.RIGHT:
+                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/right.png", UriKind.Relative));
+
                             this.PosLeft += this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
-
-                            rotate =
-new RotateTransform(0);
-                            grdImagens.RenderTransform = rotate;
                             break;
                         case ENUM_DIRECAO.DOWN:
+                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/down.png", UriKind.Relative));
+
                             this.PosTop += this.velocidade;
-                            rotate =
-new RotateTransform(90);
-                            grdImagens.RenderTransform = rotate;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
 
 
                             break;
                     }
-                    //this.txtMarginLeft.Text = this.PosLeft.ToString();
-                    //this.txtMarginTop.Text = this.PosTop.ToString();
 
-                    //this.direcaoAtual = direcao;
+                    Int32.TryParse((this.PosTop / this.Height).ToString(),out int l);
+                    this.Linha = l;
+                    Int32.TryParse((this.PosLeft / this.Width).ToString(),out int c);
+                    this.Coluna =  c;
 
                 }
 
@@ -142,5 +172,6 @@ new RotateTransform(90);
 
             }
         }
+
     }
 }

@@ -47,6 +47,7 @@ namespace Pacman.UserControls
             }
         }
 
+
         private int _linha;
 
         public int Linha

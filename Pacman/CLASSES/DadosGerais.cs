@@ -14,7 +14,7 @@ namespace Pacman.CLASSES
         public static string caminhoApp = Directory.GetCurrentDirectory();
         public static string caminhoArquivoConfigGame = caminhoApp + @"\config.json";
 
-
+        public static string caminhoAudio = caminhoApp + @"\sounds";
         public static ConfigGame configGame;
 
     }

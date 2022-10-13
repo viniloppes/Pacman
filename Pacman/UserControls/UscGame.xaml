@@ -15,8 +15,8 @@
                 Background="{DynamicResource PrimaryHueDarkBrush}"
                 Height="100" VerticalAlignment="Top">
                 <StackPanel Orientation="Horizontal" >
-                    <Viewbox Width="300">
-                        
+                    <Viewbox Width="250" Height="100">
+
                         <materialDesign:Chip
                     x:Name="txtTempo"
                     Content="ANZ Bank">
@@ -25,7 +25,7 @@
                             </materialDesign:Chip.Icon>
                         </materialDesign:Chip>
                     </Viewbox>
-                    <Viewbox Width="300" Margin="50,0,0,0">
+                    <Viewbox Width="250" Height="100" Margin="10,0,0,0">
                         <materialDesign:Chip
                     x:Name="txtPonto"
                     Content="300 Pontos">
@@ -33,6 +33,33 @@
                                 <materialDesign:PackIcon Kind="Coins"></materialDesign:PackIcon>
                             </materialDesign:Chip.Icon>
                         </materialDesign:Chip>
+                    </Viewbox>
+                    <Viewbox Width="200" Margin="50,0,0,0">
+                        <materialDesign:RatingBar
+ 
+                            x:Name="rbVida"
+                            IsReadOnly="True"
+                            Max="3"
+                            Value="2"
+                            Orientation="Horizontal">
+                            <materialDesign:RatingBar.ValueItemTemplate>
+                                <DataTemplate
+                                   DataType="system:Int32">  
+                                    <Grid>
+                                        <materialDesign:PackIcon
+                                          Kind="Heart"
+                                          Height="24"
+                                          Width="24" />
+                                        <!--<TextBlock
+                                          Text="{Binding}"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          FontSize="8"
+                                          Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" />-->            
+                                    </Grid>
+                                </DataTemplate>
+                            </materialDesign:RatingBar.ValueItemTemplate>
+                        </materialDesign:RatingBar>
                     </Viewbox>
 
 

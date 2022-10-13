@@ -25,11 +25,12 @@
                     HorizontalAlignment="Left" 
                     Margin="750,50,0,0"></local:UscBlocoCenario>
                 </Grid>
-                <StackPanel Width="400" Margin="910,-10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel Width="100" Margin="850,10,0,0" VerticalAlignment="Top" HorizontalAlignment="Left">
+
                     <materialDesign:Card
     materialDesign:ShadowAssist.ShadowDepth="Depth2"
-    Padding="32" Background="#19808080">
-                        <Viewbox Margin="50">
+    Background="#19808080" >
+                        <Viewbox >
                             <local:UscBlocoCenario
                                 x:Name="uscBlocoCenarioAtual"
                                 Height="50" 
@@ -41,35 +42,49 @@
                     </materialDesign:Card>
 
 
-                    <Viewbox x:Name="Lixeira" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top" HorizontalAlignment="Left">
-                        <Button
+                    <Viewbox x:Name="Lixeira" RenderTransformOrigin="0.5,0.5" 
+                             VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"
+                             
+                            >
+                        <Grid>
+                            <Button
                        Height="50" Width="50"
+                            x:Name="btnExcluir"
                             Style="{StaticResource MaterialDesignOutlinedButton}"
-                            ToolTip="Arraste aqui para excluir" FontSize="17">
-                            <materialDesign:PackIcon
+                            ToolTip="Arraste aqui para excluir" FontSize="17"  >
+                                <materialDesign:PackIcon
                                 x:Name="lixeiraIcon"
                                 Kind="TrashCan" 
                                 FontSize="30" Height="41" Width="40" Margin="-13,0,-12,0" />
 
-                        </Button>
+                            </Button>
+                            <Border Background="Transparent" MouseDown="btnExcluir_MouseDown" ></Border>
+                        </Grid>
+
                     </Viewbox>
                 </StackPanel>
 
-                <ScrollViewer Width="600"
+                <ScrollViewer
                               x:Name="scvConteudo"
                           PanningMode="VerticalOnly" 
-                          ManipulationBoundaryFeedback="scvConteudo_ManipulationBoundaryFeedback" Margin="1310,0,10,0" 
+                          ManipulationBoundaryFeedback="scvConteudo_ManipulationBoundaryFeedback" 
+                              Margin="1000,10,10,-10" 
                           >
                     <StackPanel>
                         <Grid Margin="5,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="55*"/>
+                                <RowDefinition Height="568*"/>
+                            </Grid.RowDefinitions>
 
-                            <Border Height="90"  Background="{DynamicResource PrimaryHueDarkBrush}" CornerRadius="10" VerticalAlignment="Top">
+                            <Border Height="90"  Background="{DynamicResource PrimaryHueDarkBrush}" CornerRadius="10" VerticalAlignment="Top" Margin="0,0,-0.8,0">
 
                             </Border>
 
                             <Expander
+                                x:Name="expBloco"
                                 Expanded="Expander_Expanded"
-                    HorizontalAlignment="Stretch" Foreground="White" Background="#00FAFAFA" >
+                    HorizontalAlignment="Stretch" Foreground="White" Background="#00FAFAFA" Margin="0,0,-0.8,-0.4" Grid.RowSpan="2" >
 
                                 <Expander.Header >
                                     <Border Height="65" VerticalAlignment="Center">
@@ -342,8 +357,9 @@
                 </Grid>
                 <Grid Margin="432,805,1282,0">
                     <Button
-    Style="{StaticResource MaterialDesignOutlinedButton}"
-                        Height="50"
+                        x:Name="btnVoltar"
+                        Style="{StaticResource MaterialDesignOutlinedButton}"
+                        Height="50" Click="Button_Click"
     >
                         <TextBlock
       Text="Voltar" FontSize="25" VerticalAlignment="Center" />

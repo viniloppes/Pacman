@@ -2,6 +2,7 @@
 using Pacman.UserControls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -60,6 +61,7 @@ namespace Pacman
                 uscInicio.OnConfigurarMapa += UscInicio_OnConfigurarMapa;
                 uscConfigTileMap.OnEnviaSalvarConfig += UscConfigTileMap_OnEnviaSalvarConfig;
                 DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
+                uscConfigTileMap.OnVoltar += UscConfigTileMap_OnVoltar;
                 OcultaTodasTelas();
                 ExibeTela(ENUM_TELAS.USC_INICIO);
             }
@@ -67,6 +69,19 @@ namespace Pacman
             {
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
+            }
+        }
+
+        private void UscConfigTileMap_OnVoltar()
+        {
+            try
+            {
+                ExibeTela(ENUM_TELAS.USC_INICIO);
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -97,6 +112,8 @@ namespace Pacman
                 cg.TileSize = utp.TileSize;
                 Negocios.SalvaConfigGame(DadosGerais.caminhoArquivoConfigGame, cg);
                 ExibeTela(ENUM_TELAS.USC_INICIO);
+                DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
+
             }
             catch (Exception ex)
             {
@@ -242,6 +259,11 @@ namespace Pacman
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Process.GetCurrentProcess().Kill();
         }
     }
 }
