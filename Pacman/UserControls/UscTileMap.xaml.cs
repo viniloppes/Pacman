@@ -36,7 +36,21 @@ namespace Pacman.UserControls
         private UscBlocoCenario[,] _map;
         public UscPacman Pacman { get; set; }
         //public UscEnemy Ghost { get; set; }
-        public bool PowerDotActive { get; set; }
+        private bool _powerDotAtiva;
+
+        public bool PowerDotAtiva
+        {
+            get
+            {
+                return _powerDotAtiva;
+            }
+            set
+            {
+
+                _powerDotAtiva = value;
+            }
+        }
+
         public int TileSize { get; set; }
         private int _mapLinhas;
         private int _mapColunas;
@@ -300,6 +314,7 @@ namespace Pacman.UserControls
                             enemy.Id = 1;
                         }
                         enemy.EstadoGhostAtual = ENUM_ESTADO_GHOST.NORMAL;
+                        enemy.EstadoAssustadoAcabando = false;
                         enemy.PosLeft = listaBlocoVazio[i].PosLeft;
                         enemy.PosTop = listaBlocoVazio[i].PosTop;
                         enemy.Coluna = listaBlocoVazio[i].Coluna;
@@ -600,7 +615,11 @@ namespace Pacman.UserControls
                                   pacman.PosTop + (ghost.Height) > ghost.PosTop
                                    )
                         {
+                            if (ghost.EstadoGhostAtual == ENUM_ESTADO_GHOST.ASSUSTADO)
+                            {
 
+                                grdCenario.Children.Remove(ghost);
+                            }
                             return true;
                         }
                     }
@@ -697,6 +716,45 @@ namespace Pacman.UserControls
             catch (Exception ex)
             {
 
+            }
+        }
+
+        public void AtivaPowerDot(bool acabando)
+        {
+            try
+            {
+                var listGhost = grdCenario.Children.OfType<UscEnemy>().ToList();
+                foreach (var ghost in listaGhost)
+                {
+                    ghost.EstadoGhostAtual = ENUM_ESTADO_GHOST.ASSUSTADO;
+                    ghost.EstadoAssustadoAcabando = acabando;
+
+                }
+                this.PowerDotAtiva = true;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+        public void DesativaPowerDot()
+        {
+            try
+            {
+                var listGhost = grdCenario.Children.OfType<UscEnemy>().ToList();
+                foreach (var ghost in listaGhost)
+                {
+                    ghost.EstadoGhostAtual = ENUM_ESTADO_GHOST.NORMAL;
+                    ghost.EstadoAssustadoAcabando = false;
+                }
+                this.PowerDotAtiva = false;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
             }
         }
 

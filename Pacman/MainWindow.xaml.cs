@@ -39,7 +39,8 @@ namespace Pacman
             USC_NENHUM,
             USC_INICIO,
             USC_GAME,
-            USC_CONFIG_TILE_MAP
+            USC_CONFIG_TILE_MAP,
+            USC_GAME_OVER
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -62,6 +63,8 @@ namespace Pacman
                 uscConfigTileMap.OnEnviaSalvarConfig += UscConfigTileMap_OnEnviaSalvarConfig;
                 DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
                 uscConfigTileMap.OnVoltar += UscConfigTileMap_OnVoltar;
+                uscGame.GameOver += UscGame_GameOver;
+                uscGameOver.OnJogar += UscGameOver_OnJogar;
                 OcultaTodasTelas();
                 ExibeTela(ENUM_TELAS.USC_INICIO);
             }
@@ -70,6 +73,17 @@ namespace Pacman
                 MessageBox.Show("Erro: " + ex.Message, "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
 
             }
+        }
+
+        private void UscGameOver_OnJogar()
+        {
+             ExibeTela(ENUM_TELAS.USC_INICIO);
+
+        }
+
+        private void UscGame_GameOver()
+        {
+            ExibeTela(ENUM_TELAS.USC_GAME_OVER);
         }
 
         private void UscConfigTileMap_OnVoltar()
@@ -153,6 +167,7 @@ namespace Pacman
                 uscConfigTileMap.Visibility = Visibility.Hidden;
                 uscGame.Visibility = Visibility.Hidden;
                 uscInicio.Visibility = Visibility.Hidden;
+                uscGameOver.Visibility = Visibility.Hidden;
             }
             catch (Exception ex)
             {
@@ -179,6 +194,10 @@ namespace Pacman
                     case ENUM_TELAS.USC_CONFIG_TILE_MAP:
                         OcultaTodasTelas();
                         uscConfigTileMap.Finaliza();
+                        break;
+                    case ENUM_TELAS.USC_GAME_OVER:
+                        OcultaTodasTelas();
+                        uscGameOver.Finaliza();
                         break;
                 }
             }
@@ -214,6 +233,13 @@ namespace Pacman
                         uscGame.Visibility = Visibility.Visible;
                         uscGame.UpdateLayout();
                         uscGame.Focus();
+
+                        break;
+                    case ENUM_TELAS.USC_GAME_OVER:
+                        OcultaTela(telaAtual);
+                        uscGameOver.Inicializa(obj);
+                        uscGameOver.Visibility = Visibility.Visible;
+                        uscGameOver.UpdateLayout();
 
                         break;
                 }

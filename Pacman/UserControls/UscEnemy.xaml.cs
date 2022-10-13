@@ -26,6 +26,37 @@ namespace Pacman.UserControls
             InitializeComponent();
         }
         public int Id { get; set; }
+        private bool _estadoAssustadoAcabando;
+
+        public bool EstadoAssustadoAcabando
+        {
+            get
+            {
+                if(_estadoAssustadoAcabando == true)
+                {
+                    grdAnimaGhost.Visibility = Visibility.Visible;
+                }else
+                {
+                    grdAnimaGhost.Visibility = Visibility.Hidden;
+
+                }
+                return _estadoAssustadoAcabando;
+            }
+            set
+            {
+                _estadoAssustadoAcabando = value;
+                if (_estadoAssustadoAcabando == true)
+                {
+                    grdAnimaGhost.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    grdAnimaGhost.Visibility = Visibility.Hidden;
+
+                }
+            }
+        }
+
         private ENUM_ESTADO_GHOST _estadoGhostAtual;
 
         public ENUM_ESTADO_GHOST EstadoGhostAtual
@@ -39,7 +70,9 @@ namespace Pacman.UserControls
 
                         break;
                     case ENUM_ESTADO_GHOST.ASSUSTADO:
-                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/scaredGhost.png", UriKind.Relative));
+
+                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/scaredGhost.png", UriKind.Relative));
+
 
                         break;
                 }
@@ -55,7 +88,7 @@ namespace Pacman.UserControls
 
                         break;
                     case ENUM_ESTADO_GHOST.ASSUSTADO:
-                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/scaredGhost.png", UriKind.Relative));
+                        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/scaredGhost.png", UriKind.Relative));
 
                         break;
                 }
@@ -73,6 +106,22 @@ namespace Pacman.UserControls
         //public ENUM_DIRECAO requestedMovingDirection { get; set; }
         private int _linha;
         public double velocidade { get; set; }
+        //private bool _scared;
+
+        //public bool Scared
+        //{
+        //    get
+        //    {
+        //        imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/scaredGhost.png", UriKind.Relative));
+
+        //        return _scared;
+
+        //    }
+        //    set
+        //    {
+        //        _scared = value;
+        //    }
+        //}
 
         public bool mudandoDirecao { get; set; }
         public int Linha
@@ -118,10 +167,10 @@ namespace Pacman.UserControls
 
         public bool Pause()
         {
-            return  this.ColisaoParede || this.mudandoDirecao;
+            return this.ColisaoParede || this.mudandoDirecao;
         }
 
-     
+
 
         public void AtualizaPosicao()
         {
@@ -129,28 +178,45 @@ namespace Pacman.UserControls
             {
                 if (Pause() == false)
                 {
+
                     switch (this.direcaoAtual)
                     {
                         case ENUM_DIRECAO.LEFT:
-                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/left.png", UriKind.Relative));
+                            if (this.EstadoGhostAtual == ENUM_ESTADO_GHOST.NORMAL)
+                            {
+                                imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/left.png", UriKind.Relative));
+
+                            }
 
                             this.PosLeft -= this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
                             break;
                         case ENUM_DIRECAO.UP:
-                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/up.png", UriKind.Relative));
+                            if (this.EstadoGhostAtual == ENUM_ESTADO_GHOST.NORMAL)
+                            {
+                                imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/up.png", UriKind.Relative));
+
+                            }
 
                             this.PosTop -= this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
                             break;
                         case ENUM_DIRECAO.RIGHT:
-                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/right.png", UriKind.Relative));
+                            if (this.EstadoGhostAtual == ENUM_ESTADO_GHOST.NORMAL)
+                            {
+                                imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/right.png", UriKind.Relative));
+
+                            }
 
                             this.PosLeft += this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
                             break;
                         case ENUM_DIRECAO.DOWN:
-                            imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/down.png", UriKind.Relative));
+                            if (this.EstadoGhostAtual == ENUM_ESTADO_GHOST.NORMAL)
+                            {
+                                imgEnemy.Source = new BitmapImage(new Uri("/Pacman;component/Imagens/ghosts/down.png", UriKind.Relative));
+
+                            }
 
                             this.PosTop += this.velocidade;
                             this.Margin = new Thickness(this.PosLeft, this.PosTop, 0, 0);
@@ -159,17 +225,18 @@ namespace Pacman.UserControls
                             break;
                     }
 
-                    Int32.TryParse((this.PosTop / this.Height).ToString(),out int l);
+
+                    Int32.TryParse((this.PosTop / this.Height).ToString(), out int l);
                     this.Linha = l;
-                    Int32.TryParse((this.PosLeft / this.Width).ToString(),out int c);
-                    this.Coluna =  c;
+                    Int32.TryParse((this.PosLeft / this.Width).ToString(), out int c);
+                    this.Coluna = c;
 
                 }
 
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
         }
 

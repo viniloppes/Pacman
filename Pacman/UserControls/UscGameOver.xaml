@@ -5,8 +5,28 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Pacman.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+           Height="1080" Width="1920">
+    <Grid Background="Black">
+        <StackPanel Height="1080" Width="1000">
+            <Image Width="500" Source="/Pacman;component/Imagens/banner.png"></Image>
+            <!-- the transitioner will manage your transitions. notice how SelectedIndex is set to zero: the first slide (instead of the default of -1) -->
+
+
+            <Viewbox  Height="500" VerticalAlignment="Top">
+
+                <Image Source="/Pacman;component/Imagens/game-over.png"></Image>
+            </Viewbox>
+            <Viewbox Height="50" Margin="0,200,0 ,25">
+                <Button
+                    x:Name="btnJogar"
+                    Height="100" Width="500"
+    Style="{StaticResource MaterialDesignOutlinedButton}"
+                    FontSize="50" Click="btnJogar_Click">
+                    AVANÇAR
+                </Button>
+            </Viewbox>
+
+        </StackPanel>
+       
     </Grid>
 </UserControl>

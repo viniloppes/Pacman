@@ -51,6 +51,8 @@ namespace Pacman.UserControls
 
         int toutMudaDirecaoGhost_2 = 0;
         const int TOUT_MUDA_DIRECAO_GHOST_2 = 7;
+        int toutPowerDotAtiva = 0;
+        const int TOUT_POWER_DOT_ATIVA = 8;
         public void Inicializa(object obj)
         {
             try
@@ -76,12 +78,14 @@ namespace Pacman.UserControls
                 {
 
                 }
+
                 uscTileMap.listaBlocoCenarioAux = new List<UscBlocoCenario>();
 
                 ConfigGame cg = DadosGerais.configGame;
                 uscTileMap.MapColunas = cg.MapColunas;
                 uscTileMap.MapLinhas = cg.MapLinhas;
                 uscTileMap.Map = new UscBlocoCenario[uscTileMap.MapColunas, uscTileMap.MapLinhas];
+                uscTileMap.PowerDotAtiva = false;
                 uscTileMap.TileSize = cg.TileSize;
                 for (int i = 0; i < uscTileMap.MapLinhas; i++)
                 {
@@ -118,6 +122,8 @@ namespace Pacman.UserControls
                 audioGameWin = new SoundPlayer(DadosGerais.caminhoAudio + @"\gameWin.wav");
                 audioPowerDot = new SoundPlayer(DadosGerais.caminhoAudio + @"\power_dot.wav");
                 audioEatGhost = new SoundPlayer(DadosGerais.caminhoAudio + @"\eat_ghost.wav");
+                toutPowerDotAtiva = 0;
+                uscTileMap.DesativaPowerDot();
 
             }
             catch (Exception ex)
@@ -130,7 +136,50 @@ namespace Pacman.UserControls
 
         public void Finaliza()
         {
+            try
+            {
+                dispatcherTimer.Stop();
+                dispatcherTimerSegundos.Stop();
+            }
+            catch (Exception ex)
+            {
 
+            }
+            try
+            {
+                try
+                {
+                    dispatcherTimer.Tick -= DispatcherTimer_Tick;
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+                try
+                {
+                    dispatcherTimerSegundos.Tick -= DispatcherTimerSegundos_Tick;
+
+                }
+                catch (Exception ex)
+                {
+
+                }
+
+                try
+                {
+                    uscTileMap.grdCenario.Children.Clear();
+                }
+                catch (Exception ex)
+                {
+
+                }
+                toutDuracaGame = 0;
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public void RetomaPosicao()
@@ -179,6 +228,23 @@ namespace Pacman.UserControls
             {
                 toutTempoJogado++;
                 txtTempo.Content = toutTempoJogado + " sec";
+                if (toutPowerDotAtiva > 0)
+                {
+
+                    uscTileMap.AtivaPowerDot(false);
+                    if (toutPowerDotAtiva < 3)
+                    {
+                        uscTileMap.AtivaPowerDot(true);
+
+                    }
+                    if (--toutPowerDotAtiva == 0)
+                    {
+                        uscTileMap.PowerDotAtiva = false;
+                        uscTileMap.DesativaPowerDot();
+
+
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -248,7 +314,7 @@ namespace Pacman.UserControls
         {
             try
             {
-                if (uscTileMap.VerificaColisaoPastilha(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.direcaoAtual,ENUM_TIPO_BLOCO.PASTILHA) == true)
+                if (uscTileMap.VerificaColisaoPastilha(uscTileMap.Pacman.PosLeft, uscTileMap.Pacman.PosTop, uscTileMap.Pacman.direcaoAtual, ENUM_TIPO_BLOCO.PASTILHA) == true)
                 {
                     pontos += 10;
                     txtPonto.Content = pontos + " pontos";
@@ -271,7 +337,8 @@ namespace Pacman.UserControls
                     pontos += 50;
                     txtPonto.Content = pontos + " pontos";
                     audioPowerDot.Play();
-                    uscTileMap.PowerDotActive = true;
+                    uscTileMap.PowerDotAtiva = true;
+                    toutPowerDotAtiva = TOUT_POWER_DOT_ATIVA;
                 }
             }
             catch (Exception ex)
@@ -396,39 +463,50 @@ namespace Pacman.UserControls
             {
                 try
                 {
-                    if (toutMudaDirecaoGhost == 0)
+                    if (toutDuracaGame > 0)
                     {
-                        Dispatcher.Invoke(new Action(() =>
-                                         {
-                                             uscTileMap.VerificaDirecaoDiferenteGhost();
-                                         }));
-                        toutMudaDirecaoGhost = TOUT_MUDA_DIRECAO_GHOST;
-
-                    }
-                    if (toutMudaDirecaoGhost_2 == 0)
-                    {
-                        Dispatcher.Invoke(new Action(() =>
+                        if (toutMudaDirecaoGhost == 0)
                         {
-                            uscTileMap.ColisaoGhostComGhost();
-                            toutMudaDirecaoGhost_2 = TOUT_MUDA_DIRECAO_GHOST_2;
+                            Dispatcher.Invoke(new Action(() =>
+                                             {
+                                                 uscTileMap.VerificaDirecaoDiferenteGhost();
+                                             }));
+                            toutMudaDirecaoGhost = TOUT_MUDA_DIRECAO_GHOST;
 
-                        }));
-                    }
-                    
-
-                    Dispatcher.Invoke(new Action(() =>
-                    {
-                        if (uscTileMap.VerificaColisaoPacmanGhost() == true)
-                        {
-
-                            if (--rbVida.Value == 0)
-                            {
-                                GameOver?.Invoke();
-                            }
-                            RetomaPosicao();
-                            audioGameOver.Play();
                         }
-                    }));
+                        if (toutMudaDirecaoGhost_2 == 0)
+                        {
+                            Dispatcher.Invoke(new Action(() =>
+                            {
+                                uscTileMap.ColisaoGhostComGhost();
+                                toutMudaDirecaoGhost_2 = TOUT_MUDA_DIRECAO_GHOST_2;
+
+                            }));
+                        }
+
+
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+                            if (uscTileMap.VerificaColisaoPacmanGhost() == true)
+                            {
+                                if (toutPowerDotAtiva > 0)
+                                {
+                                    audioEatGhost.Play();
+                                }
+                                else
+                                {
+
+                                    RetomaPosicao();
+                                    audioGameOver.Play();
+                                    if (--rbVida.Value == 0)
+                                    {
+                                        GameOver?.Invoke();
+                                    }
+                                }
+                            }
+                        }));
+
+                    }
 
 
 

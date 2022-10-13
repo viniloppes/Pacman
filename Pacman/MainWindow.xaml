@@ -19,6 +19,7 @@
 
 
                     <usercontrols:UscGame x:Name="uscGame"></usercontrols:UscGame>
+                    <usercontrols:UscGameOver x:Name="uscGameOver"></usercontrols:UscGameOver>
                 </Grid>
             </Viewbox>
         </Grid>

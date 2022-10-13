@@ -24,5 +24,30 @@ namespace Pacman.UserControls
         {
             InitializeComponent();
         }
+        public delegate void EnviaEvento();
+        public event EnviaEvento OnJogar;
+        public void Inicializa(object obj)
+        {
+
+        }
+        public void Finaliza()
+        {
+
+        }
+
+        private void btnJogar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OnJogar?.Invoke();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+     
     }
 }
