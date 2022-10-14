@@ -19,6 +19,8 @@ using System.Windows.Threading;
 using static Pacman.UserControls.UscBlocoCenario;
 using static Pacman.UserControls.UscPacman;
 
+
+
 namespace Pacman.UserControls
 {
     /// <summary>
@@ -32,12 +34,18 @@ namespace Pacman.UserControls
         }
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         DispatcherTimer dispatcherTimerSegundos = new DispatcherTimer();
+        SoundEffectsControl audioWaka =
+            new SoundEffectsControl(DadosGerais.arquivoAudioWaka);
+        SoundEffectsControl audioEatGhost =
+     new SoundEffectsControl(DadosGerais.arquivoAudioEatGhost);
+        SoundEffectsControl audioGameOVer =
+     new SoundEffectsControl(DadosGerais.arquivoAudioGameOver);
 
-        SoundPlayer audioWaka;
-        SoundPlayer audioGameOver;
-        SoundPlayer audioGameWin;
-        SoundPlayer audioPowerDot;
-        SoundPlayer audioEatGhost;
+        SoundEffectsControl audioGameWin =
+     new SoundEffectsControl(DadosGerais.arquivoAudioGameWin);
+
+        SoundEffectsControl audioPowerDots =
+     new SoundEffectsControl(DadosGerais.arquivoAudioPowerDot);
 
         int contadorAudioPowerDots = 0;
         const int CONTADOR_AUDIO_POWER_DOTS = 0;
@@ -117,14 +125,9 @@ namespace Pacman.UserControls
                 txtPonto.Content = pontos + " pontos";
                 rbVida.Value = 3;
                 IniciaThread();
-                audioWaka = new SoundPlayer(DadosGerais.caminhoAudio + @"\waka.wav");
-                audioGameOver = new SoundPlayer(DadosGerais.caminhoAudio + @"\gameOver.wav");
-                audioGameWin = new SoundPlayer(DadosGerais.caminhoAudio + @"\gameWin.wav");
-                audioPowerDot = new SoundPlayer(DadosGerais.caminhoAudio + @"\power_dot.wav");
-                audioEatGhost = new SoundPlayer(DadosGerais.caminhoAudio + @"\eat_ghost.wav");
                 toutPowerDotAtiva = 0;
                 uscTileMap.DesativaPowerDot();
-
+                audioGameWin.Play(false);
             }
             catch (Exception ex)
             {
@@ -231,7 +234,15 @@ namespace Pacman.UserControls
                 if (toutPowerDotAtiva > 0)
                 {
 
-                    --toutPowerDotAtiva;
+                    if (--toutPowerDotAtiva == 0)
+                    {
+                        toutPowerDotAtiva--;
+                        uscTileMap.PowerDotAtiva = false;
+                        uscTileMap.DesativaPowerDot();
+                        audioPowerDots.StopPlaying();
+
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -306,7 +317,7 @@ namespace Pacman.UserControls
                 {
                     pontos += 10;
                     txtPonto.Content = pontos + " pontos";
-                    audioWaka.Play();
+                    audioWaka.Play(false);
                 }
             }
             catch (Exception ex)
@@ -324,7 +335,7 @@ namespace Pacman.UserControls
                 {
                     pontos += 50;
                     txtPonto.Content = pontos + " pontos";
-                    audioPowerDot.Play();
+                    audioPowerDots.Play(true);
                     uscTileMap.PowerDotAtiva = true;
                     toutPowerDotAtiva = TOUT_POWER_DOT_ATIVA;
                 }
@@ -488,13 +499,6 @@ namespace Pacman.UserControls
                                     uscTileMap.AtivaPowerDot(false);
 
                                 }
-                                if (toutPowerDotAtiva == 0)
-                                {
-                                    uscTileMap.PowerDotAtiva = false;
-                                    uscTileMap.DesativaPowerDot();
-
-
-                                }
                             }
                         }));
 
@@ -504,13 +508,13 @@ namespace Pacman.UserControls
                             {
                                 if (toutPowerDotAtiva > 0)
                                 {
-                                    audioEatGhost.Play();
+                                    audioEatGhost.Play(false);
                                 }
                                 else
                                 {
 
                                     RetomaPosicao();
-                                    audioGameOver.Play();
+                                    audioGameOVer.Play(false);
                                     if (--rbVida.Value == 0)
                                     {
                                         GameOver?.Invoke();

@@ -2,6 +2,11 @@
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+</PropertyGroup>
+  <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E310BA1D-5AC5-4FD2-8992-7EA3033D7BA4}</ProjectGuid>
@@ -68,7 +73,6 @@
     <Compile Include="CLASSES\DadosGerais.cs" />
     <Compile Include="CLASSES\Negocios.cs" />
     <Compile Include="CLASSES\Posicao.cs" />
-    <Compile Include="CLASSES\SoundEffectsControl.cs" />
     <Compile Include="UserControls\UscBlocoCenario.xaml.cs">
       <DependentUpon>UscBlocoCenario.xaml</DependentUpon>
     </Compile>

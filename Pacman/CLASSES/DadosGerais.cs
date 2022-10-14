@@ -17,5 +17,13 @@ namespace Pacman.CLASSES
         public static string caminhoAudio = caminhoApp + @"\sounds";
         public static ConfigGame configGame;
 
+
+        public static string arquivoAudioWaka = caminhoAudio + @"\waka.wav";
+        public static string arquivoAudioGameOver = caminhoAudio + @"\gameOver.wav";
+        public static string arquivoAudioGameWin = caminhoAudio + @"\gameWin.wav";
+        public static string arquivoAudioPowerDot = caminhoAudio + @"\power_dot.wav";
+        public static string arquivoAudioEatGhost = caminhoAudio + @"\eat_ghost.wav";
+
+
     }
 }
