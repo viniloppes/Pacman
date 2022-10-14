@@ -231,19 +231,7 @@ namespace Pacman.UserControls
                 if (toutPowerDotAtiva > 0)
                 {
 
-                    uscTileMap.AtivaPowerDot(false);
-                    if (toutPowerDotAtiva < 3)
-                    {
-                        uscTileMap.AtivaPowerDot(true);
-
-                    }
-                    if (--toutPowerDotAtiva == 0)
-                    {
-                        uscTileMap.PowerDotAtiva = false;
-                        uscTileMap.DesativaPowerDot();
-
-
-                    }
+                    --toutPowerDotAtiva;
                 }
             }
             catch (Exception ex)
@@ -484,6 +472,31 @@ namespace Pacman.UserControls
                             }));
                         }
 
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+
+                            if (toutPowerDotAtiva > 0)
+                            {
+
+                                if (toutPowerDotAtiva < 3)
+                                {
+                                    uscTileMap.AtivaPowerDot(true);
+
+                                }
+                                else
+                                {
+                                    uscTileMap.AtivaPowerDot(false);
+
+                                }
+                                if (toutPowerDotAtiva == 0)
+                                {
+                                    uscTileMap.PowerDotAtiva = false;
+                                    uscTileMap.DesativaPowerDot();
+
+
+                                }
+                            }
+                        }));
 
                         Dispatcher.Invoke(new Action(() =>
                         {
@@ -513,6 +526,10 @@ namespace Pacman.UserControls
                     //Temporizador do jogo
                     try
                     {
+                        if (toutPowerDotAtiva > 0)
+                        {
+
+                        }
 
                     }
                     catch (Exception ex)
