@@ -758,5 +758,35 @@ namespace Pacman.UserControls
             }
         }
 
+
+        public bool VerificaVitoria()
+        {
+            try
+            {
+                var listaBlocoCenario= grdCenario.Children.OfType<UscBlocoCenario>().ToList();
+                if (listaBlocoCenario != null)
+                {
+
+                    foreach (UscBlocoCenario pastilha in listaBlocoCenario)
+                    {
+                        if(pastilha.TipoBloco == ENUM_TIPO_BLOCO.PASTILHA ||
+                           pastilha.TipoBloco == ENUM_TIPO_BLOCO.SUPER_PASTILHA)
+                        {
+                            return false;
+                        } 
+                    }
+                    return true;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro: " + ex.Message, "Erro: ", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            return false;
+
+        }
     }
 }

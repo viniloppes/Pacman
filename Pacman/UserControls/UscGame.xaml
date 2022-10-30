@@ -28,7 +28,7 @@
                     <Viewbox Width="250" Height="100" Margin="10,0,0,0">
                         <materialDesign:Chip
                     x:Name="txtPonto"
-                    Content="300 Pontos">
+                    Content="300 Pontos" Cursor="Hand">
                             <materialDesign:Chip.Icon>
                                 <materialDesign:PackIcon Kind="Coins"></materialDesign:PackIcon>
                             </materialDesign:Chip.Icon>

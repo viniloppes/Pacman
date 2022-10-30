@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace Pacman.UserControls
 {
     /// <summary>
-    /// Interação lógica para UscGameOver.xam
+    /// Interação lógica para UscGameWin.xam
     /// </summary>
-    public partial class UscGameOver : UserControl
+    public partial class UscGameWin : UserControl
     {
-        public UscGameOver()
+        public UscGameWin()
         {
             InitializeComponent();
         }
@@ -30,9 +30,8 @@ namespace Pacman.UserControls
         {
             try
             {
-                txtPonto.Content = pontos  + " pontos";
+                txtPonto.Content = pontos + " pontos";
                 txtTempo.Content = tempo + " segundos";
-
             }
             catch (Exception ex)
             {
@@ -58,7 +57,5 @@ namespace Pacman.UserControls
                 throw ex;
             }
         }
-
-     
     }
 }

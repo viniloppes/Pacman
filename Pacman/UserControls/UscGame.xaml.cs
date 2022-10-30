@@ -32,6 +32,11 @@ namespace Pacman.UserControls
         {
             InitializeComponent();
         }
+
+        public delegate void EnviaEvento(string score, string tempo);
+        public event EnviaEvento GameOver;
+        public event EnviaEvento GameWin;
+
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         DispatcherTimer dispatcherTimerSegundos = new DispatcherTimer();
         SoundEffectsControl audioWaka =
@@ -220,9 +225,7 @@ namespace Pacman.UserControls
 
             }
             catch (Exception ex)
-            {
-                //Negocios.InsereLog(@"Erro: Falha no iniciamento da thread. Erro:" + ex.Message);
-            }
+            { }
         }
 
         private void DispatcherTimerSegundos_Tick(object sender, EventArgs e)
@@ -364,6 +367,22 @@ namespace Pacman.UserControls
             }
         }
 
+        private void VerificaVitoria()
+        {
+            try
+            {
+                if (uscTileMap.VerificaVitoria() == true)
+                {
+                    GameWin?.Invoke(pontos.ToString(), toutTempoJogado.ToString());
+                    audioGameWin.Play(false);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         public void MovePacman()
         {
@@ -391,11 +410,7 @@ namespace Pacman.UserControls
                         if (uscTileMap.Pacman.direcaoAtual == ENUM_DIRECAO.UP)
                             uscTileMap.Pacman.direcaoAtual = ENUM_DIRECAO.DOWN;
                         uscTileMap.Pacman.requestedMovingDirection = ENUM_DIRECAO.DOWN;
-                        //if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
-                        //{
-                        //    uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
-
-                        //}
+            
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
@@ -404,11 +419,6 @@ namespace Pacman.UserControls
                             uscTileMap.Pacman.direcaoAtual = ENUM_DIRECAO.UP;
                         uscTileMap.Pacman.requestedMovingDirection = ENUM_DIRECAO.UP;
 
-                        //if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
-                        //{
-                        //    uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
-
-                        //}
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
@@ -416,11 +426,7 @@ namespace Pacman.UserControls
                         if (uscTileMap.Pacman.direcaoAtual == ENUM_DIRECAO.RIGHT)
                             uscTileMap.Pacman.direcaoAtual = ENUM_DIRECAO.LEFT;
                         uscTileMap.Pacman.requestedMovingDirection = ENUM_DIRECAO.LEFT;
-                        //if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
-                        //{
-                        //    uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
-
-                        //}
+                
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
@@ -428,11 +434,7 @@ namespace Pacman.UserControls
                         if (uscTileMap.Pacman.direcaoAtual == ENUM_DIRECAO.LEFT)
                             uscTileMap.Pacman.direcaoAtual = ENUM_DIRECAO.RIGHT;
                         uscTileMap.Pacman.requestedMovingDirection = ENUM_DIRECAO.RIGHT;
-                        //if (this.uscTileMap.Pacman.FezPrimeiroMovimento == false)
-                        //{
-                        //    uscTileMap.Pacman.direcaoAtual = uscTileMap.Pacman.requestedMovingDirection;
-
-                        //}
+               
                         this.uscTileMap.Pacman.FezPrimeiroMovimento = true;
 
                         break;
@@ -453,8 +455,7 @@ namespace Pacman.UserControls
 
         }
 
-        public delegate void EnviaEvento();
-        public event EnviaEvento GameOver;
+
 
         public void dispatcherTimer_Tick()
         {
@@ -501,6 +502,12 @@ namespace Pacman.UserControls
                                 }
                             }
                         }));
+                        Dispatcher.Invoke(new Action(() =>
+                        {
+
+                            VerificaVitoria();
+                        }));
+
 
                         Dispatcher.Invoke(new Action(() =>
                         {
@@ -517,7 +524,7 @@ namespace Pacman.UserControls
                                     audioGameOVer.Play(false);
                                     if (--rbVida.Value == 0)
                                     {
-                                        GameOver?.Invoke();
+                                        GameOver?.Invoke(pontos.ToString(), toutTempoJogado.ToString());
                                     }
                                 }
                             }

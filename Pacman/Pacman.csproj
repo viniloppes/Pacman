@@ -84,6 +84,9 @@
     <Compile Include="UserControls\UscGameOver.xaml.cs">
       <DependentUpon>UscGameOver.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControls\UscGameWin.xaml.cs">
+      <DependentUpon>UscGameWin.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControls\UscInicio.xaml.cs">
       <DependentUpon>UscInicio.xaml</DependentUpon>
     </Compile>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControls\UscGameOver.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControls\UscGameWin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -223,6 +230,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Imagens\game-over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Imagens\win.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />
