@@ -29,9 +29,6 @@ namespace Pacman
         {
             InitializeComponent();
         }
-        public int[,] map;
-
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
 
         public ENUM_TELAS telaAtual = ENUM_TELAS.USC_NENHUM;
         public enum ENUM_TELAS
@@ -47,22 +44,21 @@ namespace Pacman
         {
             try
             {
-                try
-                {
-                    dispatcherTimer.Tick += DispatcherTimer_Tick;
-                    dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 50);
-                    dispatcherTimer.Start();
-
-
-                }
-                catch (Exception ex)
-                {
-                }
 
                 uscInicio.OnJogar += UscInicio_OnJogar;
                 uscInicio.OnConfigurarMapa += UscInicio_OnConfigurarMapa;
                 uscConfigTileMap.OnEnviaSalvarConfig += UscConfigTileMap_OnEnviaSalvarConfig;
-                DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
+
+                try
+                {
+                    DadosGerais.configGame = Negocios.CarregaConfigGame(DadosGerais.caminhoArquivoConfigGame);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Alguns arquivos estão faltando! Verifique se você seguiu corretamente o passo a passo do README.md", "Erro", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Close();
+                }
                 uscConfigTileMap.OnVoltar += UscConfigTileMap_OnVoltar;
                 uscGame.GameOver += UscGame_GameOver;
                 uscGame.GameWin += UscGame_GameWin;
@@ -275,25 +271,6 @@ namespace Pacman
             }
         }
 
-        private void DispatcherTimer_Tick(object sender, EventArgs e)
-        {
-            try
-            {
-                try
-                {
-                    //GameLoop();
-
-                }
-                catch (Exception ex)
-                {
-
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }
-        }
         public delegate void EnviaEventoKeyUp(KeyEventArgs kea);
         public event EnviaEventoKeyUp OnKeyUp;
         private void Window_KeyUp(object sender, KeyEventArgs e)
